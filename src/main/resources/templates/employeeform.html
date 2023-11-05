@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="en">
+    <title>Person Demographics</title>
+    <!--/*/ <th:block th:include="fragments/headerinc :: head"></th:block> /*/-->
+</head>
+<body>
+<div class="container">
+    <!--/*/ <th:block th:include="fragments/header :: header"></th:block> /*/-->
+    <h2>Employee Details</h2>
+    <div>
+        <form class="form-horizontal" th:object="${employee}" th:action="@{/employee}" method="post">
+            <div class="form-group">
+                <label class="col-sm-2 control-label">UserName</label>
+                <div class="col-sm-5">
+                    <label>
+                        <input type="text" class="form-control" th:field="*{username}" required/>
+                    </label>
+                    <td th:if="${#fields.hasErrors('username')}" th:errors="*{username}">UserName Error</td>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">Password</label>
+                <div class="col-sm-5">
+                    <label>
+                        <input type="text" class="form-control" value="admin" disabled/>
+                    </label>
+                </div>
+            </div>
+            <div class="row">
+                <button type="submit" class="btn btn-primary center-block">Submit</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+</body>
+</html>

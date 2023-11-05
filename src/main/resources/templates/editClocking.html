@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="en">
+    <title>Clocking Data</title>
+    <!--/*/ <th:block th:include="fragments/headerinc :: head"></th:block> /*/-->
+</head>
+<body>
+<div class="container">
+    <!--/*/ <th:block th:include="fragments/header :: header"></th:block> /*/-->
+    <div th:if="${role == 'ROLE_ADMIN'}">
+        <h2>Add New Clocking Entry</h2>
+        <form th:object="${clocking}" th:action="@{'/employees/addClocking/' + ${employeeId}}" method="post">
+            <label for="clockInTime">Clock In Time:</label>
+            <input type="datetime-local" id="clockInTime" name="clockInTime" th:format="'yyyy-MM-ddTHH:mm'" required>
+
+            <label for="clockOutTime">Clock Out Time:</label>
+            <input type="datetime-local" id="clockOutTime" name="clockOutTime" th:format="'yyyy-MM-ddTHH:mm'" required>
+
+            <button type="submit">Add</button>
+        </form>
+    </div>
+    <h2>Clocking Data</h2>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Clock In Time</th>
+            <th>Clock Out Time</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="clocking : ${clockings}">
+            <td th:text="${clocking.id}">ID</td>
+            <td th:text="${clocking.employee.id}">ID</td>
+            <td th:text="${#temporals.format(clocking.clockInTime, 'yyyy-MM-dd HH:mm:ss')}">Clock In Time</td>
+            <td th:text="${#temporals.format(clocking.clockOutTime, 'yyyy-MM-dd HH:mm:ss')}">Clock Out Time</td>
+            <td th:if="${role == 'ROLE_ADMIN'}">
+                <a th:href="@{'/employees/deleteClocking/' + ${clocking.id} + '?employeeId=' + ${clocking.employee.id}}">Delete</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+</div>
+</body>
+</html>
